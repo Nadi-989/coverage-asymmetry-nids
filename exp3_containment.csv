@@ -1,0 +1,5 @@
+dataset,axis,train,test,coverage
+DoHBrw,benign client,Firefox,Chrome,0.9009362730292962
+DoHBrw,benign client,Chrome,Firefox,0.40830376153300213
+DAPT,attack mix,Tuesday,Wednesday,0.9621038876184254
+DAPT,attack mix,Wednesday,Tuesday,0.09942583732057417
