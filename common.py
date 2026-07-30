@@ -30,7 +30,9 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import QuantileTransformer
 
 EPS = 1e-9
-ROOT = Path(__file__).resolve().parents[1]
+_HERE = Path(__file__).resolve().parent
+# Works whether the repository keeps the src/ layout or is flattened.
+ROOT = _HERE.parent if _HERE.name == "src" else _HERE
 DATA = ROOT / "data"
 RESULTS = ROOT / "results"
 FIGURES = ROOT / "figures"
@@ -50,7 +52,7 @@ def load_doh(path: str | Path | None = None) -> tuple[pd.DataFrame, list[str]]:
     path = Path(path) if path else DATA / "doh_exfil_dedup.parquet"
     if not path.exists():
         raise FileNotFoundError(
-            f"{path} not found. Run  python src/data/build_doh.py  first."
+            f"{path} not found. Run  python build_doh.py  first."
         )
     df = pd.read_parquet(path)
     feats = [c for c in df.columns if c not in ("y", "grp")]
@@ -63,7 +65,7 @@ def load_dapt_recon(path: str | Path | None = None) -> tuple[pd.DataFrame, list[
     path = Path(path) if path else DATA / "dapt_recon.parquet"
     if not path.exists():
         raise FileNotFoundError(
-            f"{path} not found. Run  python src/data/build_dapt_recon.py  first."
+            f"{path} not found. Run  python build_dapt_recon.py  first."
         )
     df = pd.read_parquet(path)
     feats = [c for c in df.columns if c not in ("y", "day")]

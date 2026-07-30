@@ -12,7 +12,10 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 import numpy as np, pandas as pd
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+_p = Path(__file__).resolve()
+for _c in (_p.parent, _p.parents[1], _p.parents[1] / "src"):
+    if (_c / "common.py").exists():
+        sys.path.insert(0, str(_c)); break
 from common import (RESULTS, containment, load_dapt_recon,          # noqa: E402
                     load_doh, top_dispersed)
 

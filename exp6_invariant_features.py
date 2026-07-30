@@ -14,7 +14,10 @@ import sys
 from pathlib import Path
 import numpy as np, pandas as pd
 from scipy.stats import wilcoxon
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+_p = Path(__file__).resolve()
+for _c in (_p.parent, _p.parents[1], _p.parents[1] / "src"):
+    if (_c / "common.py").exists():
+        sys.path.insert(0, str(_c)); break
 from common import (EPS, RESULTS, TOOLS, fit_score, load_doh,       # noqa: E402
                     subsample)
 
