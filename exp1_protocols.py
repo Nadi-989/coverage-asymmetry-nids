@@ -11,7 +11,10 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 import numpy as np, pandas as pd
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+_p = Path(__file__).resolve()
+for _c in (_p.parent, _p.parents[1], _p.parents[1] / "src"):
+    if (_c / "common.py").exists():
+        sys.path.insert(0, str(_c)); break
 from common import (BROWSERS, RESULTS, TOOLS, fit_score, load_doh,   # noqa: E402
                     p3_splits, subsample)
 from sklearn.model_selection import train_test_split

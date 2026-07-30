@@ -35,7 +35,7 @@ With benign training fixed at 3,485 flows in both directions the asymmetry persi
 ## Installation
 
 ```bash
-git clone https://github.com/USER/coverage-asymmetry-nids.git
+git clone https://github.com/Nadi-989/coverage-asymmetry-nids.git
 cd coverage-asymmetry-nids
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
@@ -55,7 +55,7 @@ Download `MaliciousDoH-CSVs.zip` and `BenignDoH-NonDoH-CSVs.zip` from
 <https://www.unb.ca/cic/datasets/dohbrw-2020.html>, unzip both, then:
 
 ```bash
-python src/data/build_doh.py \
+python `build_doh.py` \
     --malicious-dir path/to/MaliciousDoH-CSVs/CSVs \
     --benign-dir    path/to/BenignDoH-NonDoH-CSVs/CSVs
 ```
@@ -67,7 +67,7 @@ Produces `data/doh_exfil_dedup.parquet` — 263,403 flows × 29 features.
 Download the flow CSVs from <https://gitlab.thothlab.org/> (`enp0s3-*_pcap_Flow.csv`), then:
 
 ```bash
-python src/data/build_dapt_recon.py --dir path/to/dapt2020/csv
+python `build_dapt_recon.py` --dir path/to/dapt2020/csv
 ```
 
 Produces `data/dapt_recon.parquet` — 71,770 flows × 65 features.
@@ -89,16 +89,16 @@ Roughly 40 minutes on one CPU core. Or run experiments individually:
 
 | Script | Paper section | Reproduces |
 |---|---|---|
-| `src/audit/harvest_signature.py` | §3 | the audit protocol, applicable to any dataset |
-| `src/experiments/exp1_protocols.py` | §6.2 | Tables 9–10, Figures 4–6 |
-| `src/experiments/exp2_matched_size.py` | §6.3 | Table 11 |
-| `src/experiments/exp3_containment.py` | §7, §8.3 | Table 13, Equation 9 |
-| `src/experiments/exp4_nearduplicate.py` | §6.4 | Table 12 |
-| `src/experiments/exp5_dapt_recon.py` | §8.2 | Table 15 |
-| `src/experiments/exp6_invariant_features.py` | §9 | Tables 17–18, Equation 11 |
-| `src/experiments/exp7_architectures.py` | §10 | Tables 20–22, Figure 8 |
-| `src/experiments/exp8_threshold.py` | §11 | Table 23, Figure 9 |
-| `src/figures/make_all.py` | — | all figures |
+| `harvest_signature.py` | §3 | the audit protocol, applicable to any dataset |
+| `exp1_protocols.py` | §6.2 | Tables 9–10, Figures 4–6 |
+| `exp2_matched_size.py` | §6.3 | Table 11 |
+| `exp3_containment.py` | §7, §8.3 | Table 13, Equation 9 |
+| `exp4_nearduplicate.py` | §6.4 | Table 12 |
+| `exp5_dapt_recon.py` | §8.2 | Table 15 |
+| `exp6_invariant_features.py` | §9 | Tables 17–18, Equation 11 |
+| `exp7_architectures.py` | §10 | Tables 20–22, Figure 8 |
+| `exp8_threshold.py` | §11 | Table 23, Figure 9 |
+| `make_all.py` | — | all figures |
 
 ---
 
@@ -107,7 +107,7 @@ Roughly 40 minutes on one CPU core. Or run experiments individually:
 The audit protocol is the reusable part of this work. It answers one question before you train anything: *does the labelled class exhibit the behaviour its label claims?*
 
 ```bash
-python src/audit/harvest_signature.py \
+python `harvest_signature.py` \
     --data your_dataset.parquet \
     --label-col Label \
     --attack-values "Data Exfiltration"
@@ -140,20 +140,16 @@ These are enforced in code rather than left to discipline, because each is a fai
 ## Repository layout
 
 ```
-├── src/
-│   ├── common.py                   loading, models, metrics, coverage (Eq. 9)
-│   ├── audit/
-│   │   └── harvest_signature.py    the audit protocol (§3)
-│   ├── data/
-│   │   ├── build_doh.py            constructs the DoH dataset (§4.3)
-│   │   └── build_dapt_recon.py     constructs the DAPT subset (§8.1)
-│   ├── experiments/                exp1 … exp8, one per result
-│   └── figures/                    figure generation
-├── results/                        CSV outputs (committed)
-├── figures/                        PDF and PNG (committed)
-├── data/                           derived datasets (git-ignored)
-├── run_all.sh
-└── requirements.txt
+common.py                  loading, models, metrics, coverage (Eq. 9)
+harvest_signature.py       the audit protocol (§3)
+build_doh.py               constructs the DoH dataset (§4.3)
+build_dapt_recon.py        constructs the DAPT subset (§8.1)
+exp1 … exp8_*.py           one script per result
+fig*.py, make_all.py       figure generation
+fig*.pdf                   figures as submitted
+*.csv                      result tables
+run_all.sh                 reproduces everything
+requirements.txt
 ```
 
 ---

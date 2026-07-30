@@ -15,7 +15,10 @@ from pathlib import Path
 import numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+_p = Path(__file__).resolve()
+for _c in (_p.parent, _p.parents[1], _p.parents[1] / "src"):
+    if (_c / "common.py").exists():
+        sys.path.insert(0, str(_c)); break
 from common import DATA                                          # noqa: E402
 
 RECON = {"Network Scan", "Directory Bruteforce", "Web Vulnerability Scan",
