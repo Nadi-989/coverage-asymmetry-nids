@@ -15,11 +15,11 @@
     ٤. التركيز   — وجهات قليلة متكررة؟
 
 الاستخدام:
-    python3 check_exfil_signature.py --data dapt_exfil_packed.parquet \
+    python3 harvest_signature.py --data dapt_exfil_packed.parquet \
         --label-col Stage --attack-values "Data Exfiltration"
 
     # لو أعمدة الاتجاه بأسماء مختلفة:
-    python3 check_exfil_signature.py --data f.parquet --label-col Label \
+    python3 harvest_signature.py --data f.parquet --label-col Label \
         --attack-values exfiltration \
         --fwd-bytes "TotLen Fwd Pkts" --bwd-bytes "TotLen Bwd Pkts"
 ============================================================================

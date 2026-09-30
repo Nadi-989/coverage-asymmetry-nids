@@ -25,5 +25,5 @@ ax[1].barh(yv-w/2,b['Mon+Wed→Tue'],w,xerr=f['Mon+Wed→Tue'],color=C_BAD,error
 ax[1].set_yticks(yv); ax[1].set_yticklabels([],fontsize=8); ax[1].invert_yaxis()
 ax[1].set_xlim(0,1.15); ax[1].set_xlabel('F1')
 ax[1].set_title('(b) DAPT — held-out capture day',fontsize=8.5,loc='left')
-fig.savefig('figs/fig7_models.pdf'); fig.savefig('figs/fig7_models.png')
+fig.savefig('figures/fig7_models.pdf'); fig.savefig('figures/fig7_models.png')
 print('ok')

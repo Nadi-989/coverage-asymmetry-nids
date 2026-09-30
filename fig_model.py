@@ -8,7 +8,7 @@ plt.rcParams.update({'font.size':9,'font.family':'DejaVu Sans','axes.spines.top'
  'axes.spines.right':False,'figure.dpi':300,'savefig.bbox':'tight','savefig.pad_inches':.02})
 C_BEN='#4C72B0'; C_ATK='#C44E52'; C_ALT='#55A868'
 
-df=pd.read_parquet('/mnt/user-data/outputs/doh_exfil_clean.parquet')
+df=pd.read_parquet('data/doh_exfil_dedup.parquet')
 FEAT=[c for c in df.columns if c not in ('y','grp')]; y=df.y.to_numpy()
 TOOLS=['dns2tcp','dnscat2','iodin']; BRS=['chrome','firefox']
 rs=np.random.RandomState(0)
@@ -44,7 +44,7 @@ for k,(p,yt) in curves.items():
     ax.plot(rc,pr,ls,color=c,lw=1.5,label=f'{k}  (AP={average_precision_score(yt,p):.3f})')
 ax.set_xlabel('Recall'); ax.set_ylabel('Precision'); ax.set_ylim(.55,1.02)
 ax.legend(frameon=False,fontsize=6.5,loc='lower left')
-fig.savefig('figs/fig3_prcurves.pdf'); fig.savefig('figs/fig3_prcurves.png')
+fig.savefig('figures/fig3_prcurves.pdf'); fig.savefig('figures/fig3_prcurves.png')
 
 # ---------- Fig 4 : ROC grid tool x browser ----------
 M=np.array([[0.998,0.516],[0.999,0.649],[1.000,0.638]])
@@ -58,7 +58,7 @@ for i in range(3):
         ax.text(j,i,f'{M[i,j]:.3f}',ha='center',va='center',fontsize=9,
                 color='white' if M[i,j]<.7 else 'black')
 plt.colorbar(im,ax=ax,label='ROC-AUC',fraction=.046)
-fig.savefig('figs/fig4_grid.pdf'); fig.savefig('figs/fig4_grid.png')
+fig.savefig('figures/fig4_grid.pdf'); fig.savefig('figures/fig4_grid.png')
 
 # ---------- Fig 5 : precision/recall decomposition ----------
 fig,ax=plt.subplots(figsize=(3.6,2.6))
@@ -71,5 +71,5 @@ ax.set_ylim(0,1.15); ax.set_ylabel('Score'); ax.legend(frameon=False,fontsize=7,
 for xi,(a,b) in enumerate(zip(prec,rec)):
     ax.text(xi-w/2,a+.02,f'{a:.3f}',ha='center',fontsize=6.5)
     ax.text(xi+w/2,b+.02,f'{b:.3f}',ha='center',fontsize=6.5)
-fig.savefig('figs/fig5_precrec.pdf'); fig.savefig('figs/fig5_precrec.png')
+fig.savefig('figures/fig5_precrec.pdf'); fig.savefig('figures/fig5_precrec.png')
 print('figs 3-5 ok')
