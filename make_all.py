@@ -12,10 +12,10 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 os.makedirs(HERE / "figures", exist_ok=True)
 failed = []
-SCRIPTS = ["fig0.py", "fig_desc.py", "fig_model.py", "fig6.py", "fig7.py", "fig9.py"]
+SCRIPTS = ["fig_paper.py", "fig_desc.py"]
 # inputs each script needs beyond the committed CSVs
 NEEDS = {"fig_desc.py": ["data/ids2018_infiltration.parquet", "data/doh_exfil_dedup.parquet"],
-         "fig_model.py": ["data/doh_exfil_dedup.parquet"]}
+         "fig_paper.py": ["data/doh_exfil_dedup.parquet", "results/extra_table19.csv", "results/exp7_arch_doh.csv"]}
 
 for s in SCRIPTS:
     p = HERE / s
