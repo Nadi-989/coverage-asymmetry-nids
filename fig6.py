@@ -28,5 +28,5 @@ ax[1].set_title('(b) DAPT 2020\nheld-out capture day',fontsize=8.5,loc='left')
 for i,(v,f) in zip([1,0],zip(val2,f1)):
     ax[1].text(v+.03,i,f'{v:.3f}',va='center',fontsize=8)
     ax[1].text(.03,i-.30,f'F1 = {f:.3f}',fontsize=7.5,color='.35')
-fig.savefig('figs/fig6_asymmetry.pdf'); fig.savefig('figs/fig6_asymmetry.png')
+fig.savefig('figures/fig6_asymmetry.pdf'); fig.savefig('figures/fig6_asymmetry.png')
 print('ok')

@@ -23,7 +23,7 @@ from common import DATA                                          # noqa: E402
 
 RECON = {"Network Scan", "Directory Bruteforce", "Web Vulnerability Scan",
          "Account Discovery", "Account Bruteforce"}
-BENIGN = {"Normal", "BENIGN"}
+BENIGN = {"normal", "benign"}          # matched case-insensitively: Benign / BENIGN / Normal
 DROP = {"Flow ID", "Src IP", "Src Port", "Dst IP", "Dst Port",
         "Timestamp", "Activity", "Stage"}
 
@@ -43,7 +43,8 @@ def main() -> None:
                   "(this file has lost its header row)")
             continue
         act = d["Activity"].astype(str).str.strip()
-        d = d[act.isin(RECON | BENIGN)].copy()
+        is_ben = act.str.lower().isin(BENIGN)
+        d = d[act.isin(RECON) | is_ben].copy()
         d["y"] = act[d.index].isin(RECON).astype(int)
         d["day"] = (os.path.basename(f).split("_")[0]
                     .replace("enp0s3-", "").replace("public-", "")

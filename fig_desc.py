@@ -10,8 +10,8 @@ plt.rcParams.update({'font.size':9,'font.family':'DejaVu Sans','axes.linewidth':
 C_BEN='#4C72B0'; C_ATK='#C44E52'; C_ALT='#55A868'; C_G='#8172B2'
 
 # ---------- Fig 1 : harvest signature across datasets ----------
-cic=pd.read_parquet('/mnt/user-data/outputs/hndl_ids2018_clean.parquet')
-doh=pd.read_parquet('/mnt/user-data/outputs/doh_exfil_clean.parquet')
+cic=pd.read_parquet('data/ids2018_infiltration.parquet')
+doh=pd.read_parquet('data/doh_exfil_dedup.parquet')
 
 cb=cic.loc[cic.Attack_Label==0,'TotLen Fwd Pkts'].values
 ca=cic.loc[cic.Attack_Label==1,'TotLen Fwd Pkts'].values
@@ -38,7 +38,7 @@ for x,t in [(0.5,'CSE-CIC-IDS2018'),(2.6,'DAPT 2020'),(5.7,'CIRA-CIC-DoHBrw-2020
     ax.text(x,7.6,t,ha='center',fontsize=8,style='italic')
 for x in (1.8,3.4): ax.axvline(x,color='.75',lw=.7,ls=':')
 ax.set_ylim(0,8.6)
-fig.savefig('figs/fig1_signature.pdf'); fig.savefig('figs/fig1_signature.png')
+fig.savefig('figures/fig1_signature.pdf'); fig.savefig('figures/fig1_signature.png')
 print('fig1 ok')
 
 # ---------- Fig 2 : asymmetric containment ----------
@@ -53,5 +53,5 @@ for d,c,ls in [(ff,C_ALT,'--'),(ch,C_BEN,'-')]:
     ax.add_patch(plt.Rectangle((x0,y0),x1-x0,y1-y0,fill=False,ec=c,lw=1.3,ls=ls,zorder=5))
 ax.set_xlabel(r'$\log_{10}$ flow sent rate'); ax.set_ylabel(r'$\log_{10}$ flow received rate')
 lg_=ax.legend(frameon=False,fontsize=7,loc='lower right',markerscale=3); 
-fig.savefig('figs/fig2_containment.pdf'); fig.savefig('figs/fig2_containment.png')
+fig.savefig('figures/fig2_containment.pdf'); fig.savefig('figures/fig2_containment.png')
 print('fig2 ok')
