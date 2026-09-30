@@ -21,14 +21,14 @@ Every number, table and figure in the paper is produced by the scripts in this r
 | Protocol | ROC-AUC |
 |---|---|
 | Random 70/30 | 1.000 |
-| Leave-one-tunnelling-tool-out | 0.999 |
-| Leave-tool-**and-client**-out | 0.800 ± 0.203 |
+| Leave-one-tunnelling-tool-out | 1.000 |
+| Leave-tool-**and-client**-out | 0.797 ± 0.212 |
 
-The average conceals a split: 0.998 when Chrome is held out, 0.601 when Firefox is. Recall stays at 1.00; precision falls to 0.707.
+The average conceals a split: 0.994 when Chrome is held out, 0.601 when Firefox is (20 seeds). Recall stays at 0.999; precision falls to 0.819, and at the default threshold 86 % of Firefox's benign flows are flagged as exfiltration.
 
 **3 — The cause is coverage, not sample size, and five flows fix it.**
 
-With benign training fixed at 3,485 flows in both directions the asymmetry persists (0.996 against 0.661). Adding just **five** benign flows from the held-out client raises ROC-AUC from 0.609 to 0.991.
+With benign training fixed at 3,311 flows in both directions the asymmetry persists (0.997 against 0.588). Adding just **five** benign flows from the held-out client raises ROC-AUC from 0.602 to 0.989.
 
 ---
 
@@ -98,6 +98,8 @@ Roughly 40 minutes on one CPU core. Or run experiments individually:
 | `exp6_invariant_features.py` | §9 | Tables 17–18, Equation 11 |
 | `exp7_architectures.py` | §10 | Tables 20–22, Figure 8 |
 | `exp8_threshold.py` | §11 | Table 23, Figure 9 |
+| `exp9_supplementary.py` | §6.2, §9.4, App. B | Table 19 (both directions), ablations, Table B2 |
+| `fig_paper.py` | — | Figures 1, 3–9 |
 | `make_all.py` | — | all figures |
 
 ---
