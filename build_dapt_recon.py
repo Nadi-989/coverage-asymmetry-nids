@@ -10,7 +10,7 @@ Data Exfiltration activity contains six flows, five of them empty. Its
 reconnaissance classes, however, are well populated and are what we use here.
 """
 from __future__ import annotations
-import argparse, glob, os, sys
+import argparse, glob, os, re, sys
 from pathlib import Path
 import numpy as np, pandas as pd, warnings
 warnings.filterwarnings("ignore")
@@ -23,7 +23,7 @@ from common import DATA                                          # noqa: E402
 
 RECON = {"Network Scan", "Directory Bruteforce", "Web Vulnerability Scan",
          "Account Discovery", "Account Bruteforce"}
-BENIGN = {"Normal", "BENIGN"}
+BENIGN = {"normal", "benign"}          # matched case-insensitively: Benign / BENIGN / Normal
 DROP = {"Flow ID", "Src IP", "Src Port", "Dst IP", "Dst Port",
         "Timestamp", "Activity", "Stage"}
 
@@ -43,9 +43,13 @@ def main() -> None:
                   "(this file has lost its header row)")
             continue
         act = d["Activity"].astype(str).str.strip()
-        d = d[act.isin(RECON | BENIGN)].copy()
+        is_ben = act.str.lower().isin(BENIGN)
+        d = d[act.isin(RECON) | is_ben].copy()
         d["y"] = act[d.index].isin(RECON).astype(int)
-        d["day"] = (os.path.basename(f).split("_")[0]
+        # official names look like enp0s3-public-tuesday.pcap_Flow.csv; strip
+        # everything from ".pcap"/"_pcap" on so the day is "tuesday", not "tuesday.pcap"
+        stem = re.split(r"[._]pcap", os.path.basename(f))[0]
+        d["day"] = (stem
                     .replace("enp0s3-", "").replace("public-", "")
                     .replace("pvt-", "").replace("tcpdump-", ""))
         parts.append(d)

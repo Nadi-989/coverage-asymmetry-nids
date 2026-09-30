@@ -39,6 +39,9 @@ def main() -> None:
             else:
                 tr = np.flatnonzero(df.day.isin(cfg[0]))
                 te = np.flatnonzero(df.day.isin(cfg[1]))
+                if len(tr) == 0 or len(np.unique(y[te])) < 2:
+                    raise SystemExit(f"split {name}: empty train set or single-class test set "
+                                     f"- check day names {sorted(df.day.unique())}")
             r = fit_score(df, F, subsample(tr, 25_000, s), te, seed=s)
             rows.append(dict(split=name, seed=s, **r))
 
